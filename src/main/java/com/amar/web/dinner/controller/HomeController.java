@@ -22,17 +22,22 @@ public class HomeController
 		log.info( "login:" + userid );
 		ModelAndView modelAndView = new ModelAndView();
 
-		modelAndView.setViewName( "1" );
+		modelAndView.setViewName( "home/1" );
 		modelAndView.getModelMap().put( "username" , "" + userid );
 		return modelAndView;
 	}
 
+	@RequestMapping( value = "/chat" , method = RequestMethod.GET )
+	public String gotoChat()
+	{
+		return "home/chat";
+	}
 	@RequestMapping( value = "/logout/{userid}" , method = RequestMethod.GET )
 	public ModelAndView logout( @PathVariable( "userid" ) Long userid )
 	{
 		ModelAndView modelAndView = new ModelAndView();
 
-		modelAndView.setViewName( "1" );
+		modelAndView.setViewName( "home/2" );
 		modelAndView.getModelMap().put( "username" , "" + userid );
 		return modelAndView;
 	}
