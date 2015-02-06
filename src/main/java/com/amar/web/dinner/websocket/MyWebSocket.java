@@ -82,13 +82,11 @@ public class MyWebSocket extends MessageInbound
 	@Override
 	protected void onTextMessage( CharBuffer arg0 ) throws IOException
 	{
-		System.out.println( "onTextMessage....." + arg0.toString() );
+		Menu_typeDAO menu_typeDAO = SpringBeanFactory.getBean( "menu_typeDAO" );
+		List<Menu_type> list = menu_typeDAO.findMenu_type( new Menu_type() );
+		log.info( "menu_typeDAO.findMenu_type:size:"+list.size() );
 		
-//		Menu_typeDAO menu_typeDAO = SpringBeanFactory.getBean( "menu_typeDAO" );
-//		List<Menu_type> list = menu_typeDAO.findMenu_type( new Menu_type() );
-//		log.debug( "list"+list.size() );
-		
-		log.debug( "onTextMessage....." + arg0.toString() );
+		log.info( "onTextMessage....." + arg0.toString() );
 		
 		String datetime = TimeDateUtil.getDateTime( new Date().getTime() );
 		myWebSocketServlet.broadcast( ""+username+" "+datetime+"\n"+arg0.toString() );
