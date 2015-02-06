@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.web.dinner.db.dao.User_infoDAO">
+
+<resultMap id="user_infoMap" type="user_info">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="name" column="name" jdbcType="VARCHAR"  />
+	<result property="pw" column="pw" jdbcType="VARCHAR"  />
+	<result property="phone" column="phone" jdbcType="VARCHAR"  />
+	<result property="email" column="email" jdbcType="VARCHAR"  />
+	<result property="registtime" column="registtime" />
+</resultMap>
+
+<select id="findUser_info" parameterType="user_info" resultType="user_info">
+SELECT A.id,A.name,A.pw,A.phone,A.email,A.registtime
+ FROM User_info A 
+<where>
+<if test=" id > 0 ">
+ AND A.id = #{id}
+</if>
+<if test=" name != null">
+ AND A.name = #{name}
+</if>
+<if test=" pw != null">
+ AND A.pw = #{pw}
+</if>
+<if test=" phone != null">
+ AND A.phone = #{phone}
+</if>
+<if test=" email != null">
+ AND A.email = #{email}
+</if>
+<if test=" registtimestart !=null ">
+ AND unix_timestamp('${registtimestart}') <![CDATA[ < ]]> unix_timestamp(registtime)
+</if>
+<if test=" registtimeend !=null ">
+ AND unix_timestamp('${registtimeend}') <![CDATA[ > ]]> unix_timestamp(registtime)
+</if>
+</where>
+</select>
+
+<insert id="addUser_info" parameterType="user_info" >
+<selectKey keyProperty="id" order="AFTER" resultType="int"> 
+SELECT @@IDENTITY AS id 
+</selectKey> 
+insert into User_info
+(
+id,name,pw,phone,email,registtime
+) values (
+#{id,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR},#{pw,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{registtime}
+)
+</insert>
+
+<update id="editUser_info" parameterType="user_info">
+update User_info<set>
+<if test=" name != null">
+name=#{name},
+</if>
+<if test=" pw != null">
+pw=#{pw},
+</if>
+<if test=" phone != null">
+phone=#{phone},
+</if>
+<if test=" email != null">
+email=#{email},
+</if>
+<if test=" registtime != null ">
+registtime=#{registtime},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteUser_info" parameterType="user_info" >
+DELETE FROM User_info 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

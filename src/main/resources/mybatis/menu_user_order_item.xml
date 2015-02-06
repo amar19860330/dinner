@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.web.dinner.db.dao.Menu_user_order_itemDAO">
+
+<resultMap id="menu_user_order_itemMap" type="menu_user_order_item">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="userorderid" column="userorderid" jdbcType="NUMERIC"  />
+	<result property="dishid" column="dishid" jdbcType="NUMERIC"  />
+</resultMap>
+
+<select id="findMenu_user_order_item" parameterType="menu_user_order_item" resultType="menu_user_order_item">
+SELECT A.id,A.userorderid,A.dishid
+ FROM Menu_user_order_item A 
+<where>
+<if test=" id > 0 ">
+ AND A.id = #{id}
+</if>
+<if test=" userorderid > 0 ">
+ AND A.userorderid = #{userorderid}
+</if>
+<if test=" dishid > 0 ">
+ AND A.dishid = #{dishid}
+</if>
+</where>
+</select>
+
+<insert id="addMenu_user_order_item" parameterType="menu_user_order_item" >
+<selectKey keyProperty="id" order="AFTER" resultType="int"> 
+SELECT @@IDENTITY AS id 
+</selectKey> 
+insert into Menu_user_order_item
+(
+id,userorderid,dishid
+) values (
+#{id,jdbcType=NUMERIC},#{userorderid,jdbcType=NUMERIC},#{dishid,jdbcType=NUMERIC}
+)
+</insert>
+
+<update id="editMenu_user_order_item" parameterType="menu_user_order_item">
+update Menu_user_order_item<set>
+<if test=" userorderid > 0 ">
+userorderid=#{userorderid},
+</if>
+<if test=" dishid > 0 ">
+dishid=#{dishid},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteMenu_user_order_item" parameterType="menu_user_order_item" >
+DELETE FROM Menu_user_order_item 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

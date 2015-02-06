@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.web.dinner.db.dao.Menu_user_orderDAO">
+
+<resultMap id="menu_user_orderMap" type="menu_user_order">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="userid" column="userid" jdbcType="NUMERIC"  />
+	<result property="booktime" column="booktime" />
+	<result property="pricetotal" column="pricetotal" jdbcType="NUMERIC"  />
+	<result property="itemtotal" column="itemtotal" jdbcType="VARCHAR"  />
+	<result property="menuid" column="menuid" jdbcType="NUMERIC"  />
+</resultMap>
+
+<select id="findMenu_user_order" parameterType="menu_user_order" resultType="menu_user_order">
+SELECT A.id,A.userid,A.booktime,A.pricetotal,A.itemtotal,A.menuid
+ FROM Menu_user_order A 
+<where>
+<if test=" id > 0 ">
+ AND A.id = #{id}
+</if>
+<if test=" userid > 0 ">
+ AND A.userid = #{userid}
+</if>
+<if test=" booktimestart !=null ">
+ AND unix_timestamp('${booktimestart}') <![CDATA[ < ]]> unix_timestamp(booktime)
+</if>
+<if test=" booktimeend !=null ">
+ AND unix_timestamp('${booktimeend}') <![CDATA[ > ]]> unix_timestamp(booktime)
+</if>
+<if test=" pricetotal > 0 ">
+ AND A.pricetotal = #{pricetotal}
+</if>
+<if test=" itemtotal != null">
+ AND A.itemtotal = #{itemtotal}
+</if>
+<if test=" menuid > 0 ">
+ AND A.menuid = #{menuid}
+</if>
+</where>
+</select>
+
+<insert id="addMenu_user_order" parameterType="menu_user_order" >
+<selectKey keyProperty="id" order="AFTER" resultType="int"> 
+SELECT @@IDENTITY AS id 
+</selectKey> 
+insert into Menu_user_order
+(
+id,userid,booktime,pricetotal,itemtotal,menuid
+) values (
+#{id,jdbcType=NUMERIC},#{userid,jdbcType=NUMERIC},#{booktime},#{pricetotal,jdbcType=NUMERIC},#{itemtotal,jdbcType=VARCHAR},#{menuid,jdbcType=NUMERIC}
+)
+</insert>
+
+<update id="editMenu_user_order" parameterType="menu_user_order">
+update Menu_user_order<set>
+<if test=" userid > 0 ">
+userid=#{userid},
+</if>
+<if test=" booktime != null ">
+booktime=#{booktime},
+</if>
+<if test=" pricetotal > 0 ">
+pricetotal=#{pricetotal},
+</if>
+<if test=" itemtotal != null">
+itemtotal=#{itemtotal},
+</if>
+<if test=" menuid > 0 ">
+menuid=#{menuid},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteMenu_user_order" parameterType="menu_user_order" >
+DELETE FROM Menu_user_order 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

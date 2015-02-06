@@ -1,5 +1,8 @@
 package com.amar.web.dinner.controller;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,12 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.amar.web.dinner.db.dao.Menu_typeDAO;
+import com.amar.web.dinner.db.model.Menu_type;
+
 @Controller
 @RequestMapping( "/home" )
 public class HomeController
 {
 	public final Logger log = Logger.getLogger( this.getClass() );
 
+	@Resource( name = "menu_typeDAO" )
+	Menu_typeDAO menu_typeDAO;
+	
 	@RequestMapping( value = "/login/{userid}" , method = RequestMethod.GET )
 	public ModelAndView login( @PathVariable( "userid" ) Long userid )
 	{
@@ -24,6 +33,11 @@ public class HomeController
 
 		modelAndView.setViewName( "home/1" );
 		modelAndView.getModelMap().put( "username" , "" + userid );
+		
+		List<Menu_type> list = menu_typeDAO.findMenu_type( new Menu_type() );
+		
+		log.info( "login:" + list.size() );
+		
 		return modelAndView;
 	}
 

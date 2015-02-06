@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.web.dinner.db.dao.Menu_infoDAO">
+
+<resultMap id="menu_infoMap" type="menu_info">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="name" column="name" jdbcType="VARCHAR"  />
+	<result property="remark" column="remark" jdbcType="VARCHAR"  />
+	<result property="status" column="status" jdbcType="NUMERIC"  />
+</resultMap>
+
+<select id="findMenu_info" parameterType="menu_info" resultType="menu_info">
+SELECT A.id,A.name,A.remark,A.status
+ FROM Menu_info A 
+<where>
+<if test=" id > 0 ">
+ AND A.id = #{id}
+</if>
+<if test=" name != null">
+ AND A.name = #{name}
+</if>
+<if test=" remark != null">
+ AND A.remark = #{remark}
+</if>
+<if test=" status > 0 ">
+ AND A.status = #{status}
+</if>
+</where>
+</select>
+
+<insert id="addMenu_info" parameterType="menu_info" >
+<selectKey keyProperty="id" order="AFTER" resultType="int"> 
+SELECT @@IDENTITY AS id 
+</selectKey> 
+insert into Menu_info
+(
+id,name,remark,status
+) values (
+#{id,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{status,jdbcType=NUMERIC}
+)
+</insert>
+
+<update id="editMenu_info" parameterType="menu_info">
+update Menu_info<set>
+<if test=" name != null">
+name=#{name},
+</if>
+<if test=" remark != null">
+remark=#{remark},
+</if>
+<if test=" status > 0 ">
+status=#{status},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteMenu_info" parameterType="menu_info" >
+DELETE FROM Menu_info 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

@@ -10,7 +10,14 @@
 		<setting name="lazyLoadingEnabled" value="false" />
 	</settings>
 	<typeAliases>
-		<typeAlias alias="math" type="java.util.Math" />
+		<typeAlias alias="menu_type" type="com.amar.web.dinner.db.model.Menu_type" />
+		<typeAlias alias="menu_formula_info" type="com.amar.web.dinner.db.model.Menu_formula_info" />
+		<typeAlias alias="menu_user_order" type="com.amar.web.dinner.db.model.Menu_user_order" />
+		<typeAlias alias="user_info" type="com.amar.web.dinner.db.model.User_info" />
+		<typeAlias alias="menu_formula" type="com.amar.web.dinner.db.model.Menu_formula" />
+		<typeAlias alias="menu_user_order_item" type="com.amar.web.dinner.db.model.Menu_user_order_item" />
+		<typeAlias alias="menu_info" type="com.amar.web.dinner.db.model.Menu_info" />
+		<typeAlias alias="menu_dish" type="com.amar.web.dinner.db.model.Menu_dish" />
 	</typeAliases>
 	<plugins>
 		<plugin interceptor="com.amar.web.dinner.db.page.PagePlugin">

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.web.dinner.db.dao.Menu_typeDAO">
+
+<resultMap id="menu_typeMap" type="menu_type">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="name" column="name" jdbcType="VARCHAR"  />
+</resultMap>
+
+<select id="findMenu_type" parameterType="menu_type" resultType="menu_type">
+SELECT A.id,A.name
+ FROM Menu_type A 
+<where>
+<if test=" id > 0 ">
+ AND A.id = #{id}
+</if>
+<if test=" name != null">
+ AND A.name = #{name}
+</if>
+</where>
+</select>
+
+<insert id="addMenu_type" parameterType="menu_type" >
+<selectKey keyProperty="id" order="AFTER" resultType="int"> 
+SELECT @@IDENTITY AS id 
+</selectKey> 
+insert into Menu_type
+(
+id,name
+) values (
+#{id,jdbcType=NUMERIC},#{name,jdbcType=VARCHAR}
+)
+</insert>
+
+<update id="editMenu_type" parameterType="menu_type">
+update Menu_type<set>
+<if test=" name != null">
+name=#{name},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteMenu_type" parameterType="menu_type" >
+DELETE FROM Menu_type 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>

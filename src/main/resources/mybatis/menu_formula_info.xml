@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.amar.web.dinner.db.dao.Menu_formula_infoDAO">
+
+<resultMap id="menu_formula_infoMap" type="menu_formula_info">
+	<id property="id" column="id" jdbcType="NUMERIC"  />
+	<result property="price" column="price" jdbcType="NUMERIC"  />
+	<result property="remark" column="remark" jdbcType="VARCHAR"  />
+	<result property="menuid" column="menuid" jdbcType="NUMERIC"  />
+</resultMap>
+
+<select id="findMenu_formula_info" parameterType="menu_formula_info" resultType="menu_formula_info">
+SELECT A.id,A.price,A.remark,A.menuid
+ FROM Menu_formula_info A 
+<where>
+<if test=" id > 0 ">
+ AND A.id = #{id}
+</if>
+<if test=" price > 0 ">
+ AND A.price = #{price}
+</if>
+<if test=" remark != null">
+ AND A.remark = #{remark}
+</if>
+<if test=" menuid > 0 ">
+ AND A.menuid = #{menuid}
+</if>
+</where>
+</select>
+
+<insert id="addMenu_formula_info" parameterType="menu_formula_info" >
+<selectKey keyProperty="id" order="AFTER" resultType="int"> 
+SELECT @@IDENTITY AS id 
+</selectKey> 
+insert into Menu_formula_info
+(
+id,price,remark,menuid
+) values (
+#{id,jdbcType=NUMERIC},#{price,jdbcType=NUMERIC},#{remark,jdbcType=VARCHAR},#{menuid,jdbcType=NUMERIC}
+)
+</insert>
+
+<update id="editMenu_formula_info" parameterType="menu_formula_info">
+update Menu_formula_info<set>
+<if test=" price > 0 ">
+price=#{price},
+</if>
+<if test=" remark != null">
+remark=#{remark},
+</if>
+<if test=" menuid > 0 ">
+menuid=#{menuid},
+</if>
+</set>
+<where>
+AND id = #{id} 
+</where>
+</update>
+
+<delete id="deleteMenu_formula_info" parameterType="menu_formula_info" >
+DELETE FROM Menu_formula_info 
+<where> 
+AND id = #{id}
+</where>
+</delete>
+
+</mapper>
