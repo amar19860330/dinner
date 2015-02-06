@@ -4,16 +4,21 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.catalina.websocket.MessageInbound;
 import org.apache.catalina.websocket.WsOutbound;
+import org.apache.log4j.Logger;
 
+import com.amar.web.dinner.db.dao.Menu_typeDAO;
+import com.amar.web.dinner.db.model.Menu_type;
+import com.amar.web.dinner.util.SpringBeanFactory;
 import com.amar.web.dinner.util.TimeDateUtil;
 
 
 public class MyWebSocket extends MessageInbound
 {
-
+	public final Logger log = Logger.getLogger( this.getClass() );
 	private MyWebSocketServlet myWebSocketServlet;
 
 	private String username = null;
@@ -72,10 +77,19 @@ public class MyWebSocket extends MessageInbound
 		System.out.println( "onBinaryMessage....." + arg0.toString() );
 	}
 
+	 
+	
 	@Override
 	protected void onTextMessage( CharBuffer arg0 ) throws IOException
 	{
 		System.out.println( "onTextMessage....." + arg0.toString() );
+		
+//		Menu_typeDAO menu_typeDAO = SpringBeanFactory.getBean( "menu_typeDAO" );
+//		List<Menu_type> list = menu_typeDAO.findMenu_type( new Menu_type() );
+//		log.debug( "list"+list.size() );
+		
+		log.debug( "onTextMessage....." + arg0.toString() );
+		
 		String datetime = TimeDateUtil.getDateTime( new Date().getTime() );
 		myWebSocketServlet.broadcast( ""+username+" "+datetime+"\n"+arg0.toString() );
 	}
