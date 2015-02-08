@@ -46,6 +46,13 @@ public class HomeController
 	{
 		return "home/chat";
 	}
+	
+	@RequestMapping( value = "/video" , method = RequestMethod.GET )
+	public String gotoVideo()
+	{
+		return "home/video";
+	}
+	
 	@RequestMapping( value = "/logout/{userid}" , method = RequestMethod.GET )
 	public ModelAndView logout( @PathVariable( "userid" ) Long userid )
 	{

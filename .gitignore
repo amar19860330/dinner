@@ -22,6 +22,10 @@ target/
 #.classpath
 #.project
 
+*.mp4
+*.jpeg
+*.ogg
+*.avi
 
 # External tool builders
 .externalToolBuilders/

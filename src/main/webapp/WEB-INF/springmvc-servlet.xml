@@ -123,6 +123,10 @@
         </property>   
     </bean> 
     <tx:annotation-driven transaction-manager="transactionManager"/> 
+    
+    <!-- <mvc:resources mapping="/static/**" location="/static/"/> -->
+    
+    <mvc:default-servlet-handler/>
 </beans>
 
 
