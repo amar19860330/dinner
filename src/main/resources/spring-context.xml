@@ -16,5 +16,7 @@
     http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
 	<bean id="springBeanFactory" class="com.amar.web.dinner.util.SpringBeanFactory"></bean>
-    
+    <bean id="projectConfig" class="com.amar.web.dinner.util.ProjectConfig">
+    	<property name="videopath"><value>${videopath}</value></property>
+    </bean>
 </beans>

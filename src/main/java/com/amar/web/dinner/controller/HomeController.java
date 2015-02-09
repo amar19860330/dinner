@@ -1,5 +1,6 @@
 package com.amar.web.dinner.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.amar.web.dinner.db.dao.Menu_typeDAO;
 import com.amar.web.dinner.db.model.Menu_type;
+import com.amar.web.dinner.util.ProjectConfig;
+
+;
 
 @Controller
 @RequestMapping( "/home" )
@@ -24,7 +28,10 @@ public class HomeController
 
 	@Resource( name = "menu_typeDAO" )
 	Menu_typeDAO menu_typeDAO;
-	
+
+	@Resource( name = "projectConfig" )
+	ProjectConfig projectConfig;
+
 	@RequestMapping( value = "/login/{userid}" , method = RequestMethod.GET )
 	public ModelAndView login( @PathVariable( "userid" ) Long userid )
 	{
@@ -33,11 +40,11 @@ public class HomeController
 
 		modelAndView.setViewName( "home/1" );
 		modelAndView.getModelMap().put( "username" , "" + userid );
-		
+
 		List<Menu_type> list = menu_typeDAO.findMenu_type( new Menu_type() );
-		
+
 		log.info( "login:" + list.size() );
-		
+
 		return modelAndView;
 	}
 
@@ -46,13 +53,32 @@ public class HomeController
 	{
 		return "home/chat";
 	}
-	
+
 	@RequestMapping( value = "/video" , method = RequestMethod.GET )
 	public String gotoVideo()
 	{
 		return "home/video";
 	}
-	
+
+	@RequestMapping( value = "/videos" , method = RequestMethod.GET )
+	public ModelAndView gotoVideos(HttpServletRequest request , HttpServletResponse response)
+	{
+
+		log.info( "" + projectConfig.getVideopath() );
+
+		File videoRootFile = new File( projectConfig.getVideopath() );
+		
+		String[] fileList = videoRootFile.list();
+		
+		ModelAndView modelAndView = new ModelAndView();
+
+		modelAndView.setViewName( "home/video" );
+		
+		modelAndView.getModel().put( "filelist" , fileList );
+		
+		return modelAndView;
+	}
+
 	@RequestMapping( value = "/logout/{userid}" , method = RequestMethod.GET )
 	public ModelAndView logout( @PathVariable( "userid" ) Long userid )
 	{
