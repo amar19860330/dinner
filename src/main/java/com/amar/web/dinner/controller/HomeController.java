@@ -18,7 +18,6 @@ import com.amar.web.dinner.db.dao.Menu_typeDAO;
 import com.amar.web.dinner.db.model.Menu_type;
 import com.amar.web.dinner.util.ProjectConfig;
 
-;
 
 @Controller
 @RequestMapping( "/home" )

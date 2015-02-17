@@ -41,8 +41,13 @@
 		<!-- log -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.2</version>
+			<version>1.7.5</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -262,7 +267,11 @@
 			<version>1.2</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -274,6 +283,11 @@
 			<version>${jackson.mapper.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jpush-client</artifactId>
+			<version>3.2.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>dinner</finalName>
